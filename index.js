@@ -64,7 +64,7 @@ app.get("/patients", function(req,res){
   console.log("Get Request Made.");
   Patient.find(function(err, patientList){
     if(!err){
-      res.send(patientList[0].name);
+      res.send(patientList);
     }else{
       res.send(err);
     }
