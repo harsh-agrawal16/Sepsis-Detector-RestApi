@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 
 //connect mongo client, setUp body-parser
 const app = express();
-mongoose.connect('mongodb://localhost/sepsisAppDB', {useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://admin-harsh:Test123@cluster0.8wdgx.mongodb.net/sepsisAppDB", {useNewUrlParser : true, useUnifiedTopology: true, useFindAndModify: false });
+// mongoose.connect('mongodb://localhost/sepsisAppDB', {useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.urlencoded({extended: true}));
 
 
@@ -119,6 +120,6 @@ app.post("/predictResult", function(req,res){
 });
 
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
   console.log("Successfully started server at port 3000");
 });
