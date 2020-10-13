@@ -29,9 +29,6 @@ const patientSchema = new Schema({
 
   features:[
     {
-      heartbeat:{
-        type:Number
-      },
       breathrate:{
         type:Number
       },
@@ -39,6 +36,28 @@ const patientSchema = new Schema({
         type:Number
       },
       etco2:{
+        type:Number
+      },
+      hr:{
+        //heart rate
+        type:Number
+      },
+      sbp:{
+        //Spontaneous bacterial peritonitis
+        type:Number
+      },
+      map:{
+        //mean arterial pressure.
+        type:Number
+      },
+      dbp:{
+        //vitamin D-binding protein.
+        type:Number
+      },
+      gender:{
+        type: String
+      },
+      iculus:{
         type:Number
       }
     }
