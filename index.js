@@ -2,11 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const mongodbURI = require('./private');
 
 
 //connect mongo client, setUp body-parser
 const app = express();
-mongoose.connect("mongodb+srv://admin-harsh:Test123@cluster0.8wdgx.mongodb.net/sepsisAppDB", {useNewUrlParser : true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(mongodbURI.getURI() + "/sepsisAppDB", {useNewUrlParser : true, useUnifiedTopology: true, useFindAndModify: false });
 // mongoose.connect('mongodb://localhost/sepsisAppDB', {useNewUrlParser: true, useUnifiedTopology: true });
 app.use(bodyParser.urlencoded({extended: true}));
 
