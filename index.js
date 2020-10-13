@@ -59,11 +59,36 @@ app.post("/registerPatient", function(req,res){
 });
 
 app.post("/registerHospital", function(req,res){
+  const hospitalName = req.body.hospitalName;
+  const email = req.body.email;
+  const password = req.body.password;
 
+  hospital.Hospital.findOne({email : email}, function(err, hospital){
+    if(hospital){
+      console.log("Sorry, Hospital with same email already exits, Try again with another email");
+      res.json({message : "Already Present"});
+    }
+    else{
+      console.log("Hospital Added Successfully");
+      const newHospital = new hospital.Hospital({
+        name : hospitalName,
+        email : email,
+        password : password
+      });
+
+      newHospital.save(function(err){
+        if(!err){
+          res.json({message : "Successfully Added Hospital"});
+        }else{
+          res.send(err);
+        }
+      });
+    }
+  });
 });
 
 app.post("/predictResult", function(req,res){
-
+  //add tested api from data science team to predict the result
 });
 
 
