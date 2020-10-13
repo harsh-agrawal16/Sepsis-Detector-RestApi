@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongodbURI = require('./private');
+const patient = require('./models/patient');
+const hospital = require('/models/hospital');
 
 
 //connect mongo client, setUp body-parser
@@ -12,58 +14,9 @@ mongoose.connect(mongodbURI.getURI() + "/sepsisAppDB", {useNewUrlParser : true, 
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-
-//define schemas and models for hospital and patient
-const patientSchema = {
-  name:{
-    type: String,
-    required: [true, "User Name Required"]
-  } ,
-  address:{
-    type: String,
-    required: [true, "User Address Required"]
-  },
-  age: Number,
-  mobile: {
-    type: Number,
-    required: [true, "User Number Required"]
-  },
-  email:{
-    type: String,
-    required: [true, "User Email Required!"]
-  }
-};
-// const patientSchema = {
-//   name: String,
-//   address: String,
-//   age: Number,
-//   mobile: Number,
-//   email: String
-// };
-
-const hospitalSchema  = {
-  name:{
-    type: String,
-    required: true
-  },
-  email:{
-    type: String,
-    required: true
-  },
-  password:{
-    type: String,
-    required : true
-  },
-  patients: [patientSchema]
-};
-
-const Hospital = mongoose.model("Hospital", hospitalSchema);
-const Patient = mongoose.model("Patient", patientSchema);
-
-
 app.get("/patients", function(req,res){
   console.log("Get Request Made.");
-  Patient.find(function(err, patientList){
+  hospital.Hospital.find(function(err, patientList){
     if(!err){
       res.send(patientList);
     }else{
@@ -71,11 +24,6 @@ app.get("/patients", function(req,res){
     }
   })
 });
-
-
-
-
-
 
 //Post Methods
 app.post("/registerPatient", function(req,res){
@@ -86,15 +34,13 @@ app.post("/registerPatient", function(req,res){
   const patientMobile = req.body.mobile;
 
   // console.log(req.body);
-
-
-  Patient.findOne({email: patientEmail}, function(err, patient){
+  patient.Patient.findOne({email: patientEmail}, function(err, patient){
     if(patient){
       console.log("Sorry, patient with same email already exits, Try again with another email");
       res.json({message : "Already Present"});
     }else{
       console.log("Successfully added patient.");
-      const newPatient = new Patient({
+      const newPatient = new patient.Patient({
         name : patientName,
         address : patientAddress,
         age: patientAge,
